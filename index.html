@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garbage Classifier</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #98ced5, #f4f7f6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0; 
+        }
+        .container { 
+            background: white; 
+            padding: 30px 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15); 
+            display: inline-block;
+            text-align: center;
+            width: 350px; 
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        input[type="file"] {
+            margin-top: 15px;
+        }
+
+        #imagePreview { 
+            max-width: 300px; 
+            margin-top: 20px; 
+            border-radius: 8px; 
+            display: none; 
+        }
+
+        .btn { 
+            margin-top: 15px;
+            background: #27ae60;
+            color: white;
+            padding: 10px 22px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+        #result { 
+            margin-top: 20px; 
+            font-weight: bold; 
+            font-size: 1.2rem; 
+            color: #2c3e50; }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🗑️ Garbage Classification</h1>
+        <p>Upload a photo to see if it's paper, plastic, glass, etc.</p>
+        
+        <input type="file" id="fileInput" accept="image/*">
+        <br><br>
+        <img id="imagePreview" />
+        <button class="btn" id="predictBtn" disabled>Predict</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const preview = document.getElementById('imagePreview');
+        const resultDiv = document.getElementById('result');
+        const predictBtn = document.getElementById('predictBtn');
+
+        fileInput.addEventListener('change', async () => {
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            // Show preview
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = 'block';
+            resultDiv.innerText = "Scanning garbage...";
+            predictBtn.disabled = false;
+        });
+
+        predictBtn.addEventListener('click', async () => {
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            predictBtn.disabled = true;
+            resultDiv.innerText = "🔍 Analyzing image...";
+
+            // Send to Flask
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('/predict', { 
+                    method: 'POST', 
+                    body: formData 
+                });
+                if (!response.ok) throw new Error("Server error");
+
+                const data = await response.json();
+                resultDiv.innerText = 
+                `🗑️ Prediction: ${data.prediction} (${data.confidence})`;
+            } catch (err) {
+                resultDiv.innerText = "Error identifying image.Please try again.";
+            }
+            predictBtn.disabled = false;
+        });
+    </script>
+</body>
+</html>
