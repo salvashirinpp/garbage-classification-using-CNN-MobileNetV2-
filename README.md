@@ -133,3 +133,21 @@ Focus Areas: Deep Learning, Computer Vision, Applied AI
 ## 📜 License
 
 This project is intended for **educational and learning purposes** only.
+
+## Demo
+
+
+<img width="733" height="846" alt="Screenshot 2026-01-03 205709" src="https://github.com/user-attachments/assets/b03de4f9-2726-4918-941c-1f7dcc21436b" />
+
+
+<img width="705" height="847" alt="Screenshot 2026-01-03 205953" src="https://github.com/user-attachments/assets/fb9a6119-e2de-4671-bc7c-a1d01a983bf5" />
+
+
+<img width="1093" height="849" alt="Screenshot 2025-12-17 200052" src="https://github.com/user-attachments/assets/efe8c7f9-0cf6-402d-b4d1-28280705dc38" />
+
+
+<img width="681" height="828" alt="Screenshot 2026-01-03 210044" src="https://github.com/user-attachments/assets/9ee1621a-2cd1-4ac5-898e-7268b9491dff" />
+
+
+<img width="760" height="878" alt="Screenshot 2026-01-03 210230" src="https://github.com/user-attachments/assets/b0d2ed00-acf4-4e53-8fd8-a893158ead53" />
+
